@@ -8,8 +8,10 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.ghidmaramures.data.Category
 import com.example.ghidmaramures.ui.LoginScreen
+import com.example.ghidmaramures.ui.PlaceDetailScreen
 import com.example.ghidmaramures.ui.PlaceListScreen
 
 @Composable
@@ -17,6 +19,7 @@ fun AppNavHost() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Login) {
+
         composable<Login> {
             LoginScreen(
                 onLoginClick = {
@@ -26,12 +29,23 @@ fun AppNavHost() {
                 }
             )
         }
+
         composable<PlaceList> {
             var filtru by rememberSaveable { mutableStateOf<Category?>(null) }
             PlaceListScreen(
                 selectedCategory = filtru,
                 onCategorySelected = { filtru = it },
-                onPlaceClick = {}
+                onPlaceClick = { id -> navController.navigate(PlaceDetail(id)) }
+            )
+        }
+
+        composable<PlaceDetail> { backStackEntry ->
+            val detail: PlaceDetail = backStackEntry.toRoute()
+            PlaceDetailScreen(
+                placeId = detail.id,
+                isFavorite = false,
+                onToggleFavorite = { },
+                onBack = { navController.popBackStack() }
             )
         }
     }
