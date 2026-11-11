@@ -17,6 +17,7 @@ import com.example.ghidmaramures.ui.PlaceListScreen
 @Composable
 fun AppNavHost() {
     val navController = rememberNavController()
+    var favorite by rememberSaveable { mutableStateOf(setOf<Int>()) }
 
     NavHost(navController = navController, startDestination = Login) {
 
@@ -43,8 +44,10 @@ fun AppNavHost() {
             val detail: PlaceDetail = backStackEntry.toRoute()
             PlaceDetailScreen(
                 placeId = detail.id,
-                isFavorite = false,
-                onToggleFavorite = { },
+                isFavorite = detail.id in favorite,
+                onToggleFavorite = {
+                    favorite = if (detail.id in favorite) favorite - detail.id else favorite + detail.id
+                },
                 onBack = { navController.popBackStack() }
             )
         }
