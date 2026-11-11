@@ -31,7 +31,7 @@ fun FavoritesScreen(
             modifier = Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text("Nu ai niciun loc la favorite. Deschide un loc din Categorii și apasa „Adauga la favorite”.")
+            Text("Nu ai niciun loc la favorite. Deschide un loc din Categorii si apasa „Adauga la favorite”.")
         }
     } else {
         LazyColumn(modifier = Modifier.fillMaxSize().safeDrawingPadding()) {
